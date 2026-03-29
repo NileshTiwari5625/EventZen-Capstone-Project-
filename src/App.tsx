@@ -18,10 +18,8 @@ import MyBookings from "./pages/customer/MyBookings";
 import Profile from "./pages/customer/Profile";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
-import BudgetTracker from './components/BudgetTracker';
-
-// Inside your Routes:
-<Route path="/dashboard/budget" element={<BudgetTracker />} />
+import BudgetTracker from "./components/BudgetTracker";
+import ProfileCompletionRoute from "./components/ProfileCompletionRoute";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -46,13 +44,26 @@ const App = () => (
             <Route path="venues" element={<AdminVenues />} />
             <Route path="attendees" element={<AdminAttendees />} />
             <Route path="vendors" element={<AdminVendors />} />
+            <Route path="budget" element={<BudgetTracker />} />
           </Route>
 
           {/* Customer Portal */}
-          <Route element={<CustomerLayout />}>
-            <Route path="/venues" element={<BrowseVenues />} />
-            <Route path="/bookings" element={<MyBookings />} />
+          <Route element={
+            <ProtectedRoute requiredRole="customer">
+              <CustomerLayout />
+            </ProtectedRoute>
+          }>
             <Route path="/profile" element={<Profile />} />
+            <Route path="/venues" element={
+              <ProfileCompletionRoute>
+                <BrowseVenues />
+              </ProfileCompletionRoute>
+            } />
+            <Route path="/bookings" element={
+              <ProfileCompletionRoute>
+                <MyBookings />
+              </ProfileCompletionRoute>
+            } />
           </Route>
 
           <Route path="*" element={<NotFound />} />

@@ -57,7 +57,19 @@ export interface User {
   name: string;
   email: string;
   role: "admin" | "customer";
+  phone?: string;
+  profileCompleted?: boolean;
   token?: string;
+}
+
+interface StoredAuthUser {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  phone?: string;
+  profileCompleted: boolean;
+  role: "admin" | "customer";
 }
 
 // ============ Local Storage Helpers ============
@@ -77,27 +89,60 @@ import { mockEvents, mockVenues, mockAttendees, mockVendors, mockBookings } from
 
 // ============ Auth Service ============
 export const authService = {
-  login(email: string, _password: string): User {
-    const isAdmin = email.toLowerCase().includes("admin");
+  login(email: string, password: string): User {
+    const users = getStore<StoredAuthUser>("eventzen_auth_users", []);
+    const normalizedEmail = email.trim().toLowerCase();
+    const existingUser = users.find(user => user.email === normalizedEmail);
+
+    if (!existingUser || existingUser.password !== password) {
+      throw new Error("Invalid email or password.");
+    }
+
     const user: User = {
-      id: crypto.randomUUID(),
-      name: isAdmin ? "Admin User" : "John Doe",
-      email,
-      role: isAdmin ? "admin" : "customer",
+      id: existingUser.id,
+      name: existingUser.name,
+      email: existingUser.email,
+      role: existingUser.role,
+      phone: existingUser.phone,
+      profileCompleted: existingUser.profileCompleted ?? false,
       token: `mock-jwt-${Date.now()}`,
     };
+
     localStorage.setItem("eventzen_user", JSON.stringify(user));
     return user;
   },
 
-  register(name: string, email: string, _password: string): User {
-    const user: User = {
+  register(name: string, email: string, password: string, phone: string): User {
+    const users = getStore<StoredAuthUser>("eventzen_auth_users", []);
+    const normalizedEmail = email.trim().toLowerCase();
+    const emailAlreadyExists = users.some(user => user.email === normalizedEmail);
+
+    if (emailAlreadyExists) {
+      throw new Error("An account with this email already exists.");
+    }
+
+    const newStoredUser: StoredAuthUser = {
       id: crypto.randomUUID(),
-      name,
-      email,
+      name: name.trim(),
+      email: normalizedEmail,
+      password,
+      phone: phone.trim(),
+      profileCompleted: Boolean(phone.trim()),
       role: "customer",
+    };
+
+    setStore("eventzen_auth_users", [...users, newStoredUser]);
+
+    const user: User = {
+      id: newStoredUser.id,
+      name: newStoredUser.name,
+      email: newStoredUser.email,
+      role: newStoredUser.role,
+      phone: newStoredUser.phone,
+      profileCompleted: newStoredUser.profileCompleted,
       token: `mock-jwt-${Date.now()}`,
     };
+
     localStorage.setItem("eventzen_user", JSON.stringify(user));
     return user;
   },
@@ -109,6 +154,42 @@ export const authService = {
   getCurrentUser(): User | null {
     const stored = localStorage.getItem("eventzen_user");
     return stored ? JSON.parse(stored) : null;
+  },
+
+  updateProfile(updates: { name: string; email: string; phone: string }): User {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) throw new Error("You must be signed in to update profile.");
+
+    const users = getStore<StoredAuthUser>("eventzen_auth_users", []);
+    const normalizedEmail = updates.email.trim().toLowerCase();
+    const emailInUseByAnotherUser = users.some(user => user.email === normalizedEmail && user.id !== currentUser.id);
+
+    if (emailInUseByAnotherUser) {
+      throw new Error("That email is already used by another account.");
+    }
+
+    const nextUsers = users.map(user => user.id === currentUser.id
+      ? {
+          ...user,
+          name: updates.name.trim(),
+          email: normalizedEmail,
+          phone: updates.phone.trim(),
+          profileCompleted: true,
+        }
+      : user);
+
+    setStore("eventzen_auth_users", nextUsers);
+
+    const updatedUser: User = {
+      ...currentUser,
+      name: updates.name.trim(),
+      email: normalizedEmail,
+      phone: updates.phone.trim(),
+      profileCompleted: true,
+    };
+
+    localStorage.setItem("eventzen_user", JSON.stringify(updatedUser));
+    return updatedUser;
   },
 };
 

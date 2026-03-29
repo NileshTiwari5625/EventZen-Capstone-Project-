@@ -10,20 +10,37 @@ import { useToast } from "@/hooks/use-toast";
 const Profile = () => {
   const { toast } = useToast();
   const user = authService.getCurrentUser();
-  const [firstName, setFirstName] = useState(user?.name?.split(" ")[0] || "John");
-  const [lastName, setLastName] = useState(user?.name?.split(" ")[1] || "Doe");
-  const [email, setEmail] = useState(user?.email || "john@example.com");
-  const [phone, setPhone] = useState("+1 (555) 123-4567");
+  const [firstName, setFirstName] = useState(user?.name?.split(" ")[0] || "");
+  const [lastName, setLastName] = useState(user?.name?.split(" ").slice(1).join(" ") || "");
+  const [email, setEmail] = useState(user?.email || "");
+  const [phone, setPhone] = useState(user?.phone || "");
 
   const initials = `${firstName[0] || ""}${lastName[0] || ""}`.toUpperCase();
 
   const handleSave = () => {
-    const currentUser = authService.getCurrentUser();
-    if (currentUser) {
-      const updated = { ...currentUser, name: `${firstName} ${lastName}`, email };
-      localStorage.setItem("eventzen_user", JSON.stringify(updated));
+    if (!firstName.trim() || !lastName.trim() || !email.trim() || !phone.trim()) {
+      toast({
+        title: "Complete all fields",
+        description: "Please provide first name, last name, email, and phone.",
+        variant: "destructive",
+      });
+      return;
     }
-    toast({ title: "Profile updated!" });
+
+    try {
+      authService.updateProfile({
+        name: `${firstName.trim()} ${lastName.trim()}`,
+        email,
+        phone,
+      });
+      toast({ title: "Profile updated!", description: "You can now browse venues and make bookings." });
+    } catch (error) {
+      toast({
+        title: "Unable to update profile",
+        description: error instanceof Error ? error.message : "Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
