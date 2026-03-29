@@ -60,6 +60,14 @@ export interface User {
   token?: string;
 }
 
+interface StoredAuthUser {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  role: "admin" | "customer";
+}
+
 // ============ Local Storage Helpers ============
 function getStore<T>(key: string, defaults: T[]): T[] {
   const stored = localStorage.getItem(key);
@@ -77,27 +85,54 @@ import { mockEvents, mockVenues, mockAttendees, mockVendors, mockBookings } from
 
 // ============ Auth Service ============
 export const authService = {
-  login(email: string, _password: string): User {
-    const isAdmin = email.toLowerCase().includes("admin");
+  login(email: string, password: string): User {
+    const users = getStore<StoredAuthUser>("eventzen_auth_users", []);
+    const normalizedEmail = email.trim().toLowerCase();
+    const existingUser = users.find(user => user.email === normalizedEmail);
+
+    if (!existingUser || existingUser.password !== password) {
+      throw new Error("Invalid email or password.");
+    }
+
     const user: User = {
-      id: crypto.randomUUID(),
-      name: isAdmin ? "Admin User" : "John Doe",
-      email,
-      role: isAdmin ? "admin" : "customer",
+      id: existingUser.id,
+      name: existingUser.name,
+      email: existingUser.email,
+      role: existingUser.role,
       token: `mock-jwt-${Date.now()}`,
     };
+
     localStorage.setItem("eventzen_user", JSON.stringify(user));
     return user;
   },
 
-  register(name: string, email: string, _password: string): User {
-    const user: User = {
+  register(name: string, email: string, password: string): User {
+    const users = getStore<StoredAuthUser>("eventzen_auth_users", []);
+    const normalizedEmail = email.trim().toLowerCase();
+    const emailAlreadyExists = users.some(user => user.email === normalizedEmail);
+
+    if (emailAlreadyExists) {
+      throw new Error("An account with this email already exists.");
+    }
+
+    const newStoredUser: StoredAuthUser = {
       id: crypto.randomUUID(),
-      name,
-      email,
+      name: name.trim(),
+      email: normalizedEmail,
+      password,
       role: "customer",
+    };
+
+    setStore("eventzen_auth_users", [...users, newStoredUser]);
+
+    const user: User = {
+      id: newStoredUser.id,
+      name: newStoredUser.name,
+      email: newStoredUser.email,
+      role: newStoredUser.role,
       token: `mock-jwt-${Date.now()}`,
     };
+
     localStorage.setItem("eventzen_user", JSON.stringify(user));
     return user;
   },
