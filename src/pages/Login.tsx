@@ -24,6 +24,9 @@ const Login = () => {
       if (user.role === "admin") {
         toast({ title: "Welcome back, Admin!" });
         navigate("/admin/events");
+      } else if (!user.profileCompleted) {
+        toast({ title: "Profile incomplete", description: "Please complete your profile before booking venues." });
+        navigate("/profile");
       } else {
         toast({ title: "Welcome back!" });
         navigate("/venues");

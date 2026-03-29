@@ -57,6 +57,8 @@ export interface User {
   name: string;
   email: string;
   role: "admin" | "customer";
+  phone?: string;
+  profileCompleted?: boolean;
   token?: string;
 }
 
@@ -65,6 +67,8 @@ interface StoredAuthUser {
   name: string;
   email: string;
   password: string;
+  phone?: string;
+  profileCompleted: boolean;
   role: "admin" | "customer";
 }
 
@@ -99,6 +103,8 @@ export const authService = {
       name: existingUser.name,
       email: existingUser.email,
       role: existingUser.role,
+      phone: existingUser.phone,
+      profileCompleted: existingUser.profileCompleted ?? false,
       token: `mock-jwt-${Date.now()}`,
     };
 
@@ -120,6 +126,8 @@ export const authService = {
       name: name.trim(),
       email: normalizedEmail,
       password,
+      phone: "",
+      profileCompleted: false,
       role: "customer",
     };
 
@@ -130,6 +138,8 @@ export const authService = {
       name: newStoredUser.name,
       email: newStoredUser.email,
       role: newStoredUser.role,
+      phone: newStoredUser.phone,
+      profileCompleted: newStoredUser.profileCompleted,
       token: `mock-jwt-${Date.now()}`,
     };
 
@@ -144,6 +154,42 @@ export const authService = {
   getCurrentUser(): User | null {
     const stored = localStorage.getItem("eventzen_user");
     return stored ? JSON.parse(stored) : null;
+  },
+
+  updateProfile(updates: { name: string; email: string; phone: string }): User {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) throw new Error("You must be signed in to update profile.");
+
+    const users = getStore<StoredAuthUser>("eventzen_auth_users", []);
+    const normalizedEmail = updates.email.trim().toLowerCase();
+    const emailInUseByAnotherUser = users.some(user => user.email === normalizedEmail && user.id !== currentUser.id);
+
+    if (emailInUseByAnotherUser) {
+      throw new Error("That email is already used by another account.");
+    }
+
+    const nextUsers = users.map(user => user.id === currentUser.id
+      ? {
+          ...user,
+          name: updates.name.trim(),
+          email: normalizedEmail,
+          phone: updates.phone.trim(),
+          profileCompleted: true,
+        }
+      : user);
+
+    setStore("eventzen_auth_users", nextUsers);
+
+    const updatedUser: User = {
+      ...currentUser,
+      name: updates.name.trim(),
+      email: normalizedEmail,
+      phone: updates.phone.trim(),
+      profileCompleted: true,
+    };
+
+    localStorage.setItem("eventzen_user", JSON.stringify(updatedUser));
+    return updatedUser;
   },
 };
 
