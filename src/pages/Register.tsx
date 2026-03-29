@@ -23,6 +23,8 @@ const Register = () => {
       authService.register(name, email, password);
       toast({ title: "Account created!", description: "Complete your profile to start booking venues." });
       navigate("/profile");
+      toast({ title: "Account created!", description: "Welcome to EventZen." });
+      navigate("/venues");
     } catch (error) {
       const description = error instanceof Error ? error.message : "Please try again.";
       setRegisterError(description);
