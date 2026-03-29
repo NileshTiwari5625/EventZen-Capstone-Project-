@@ -85,7 +85,35 @@ function setStore<T>(key: string, data: T[]) {
 }
 
 // ============ Seed Data ============
-import { mockEvents, mockVenues, mockAttendees, mockVendors, mockBookings } from "@/data/mockData";
+import { mockEvents, mockVenues, mockAttendees, mockVendors } from "@/data/mockData";
+
+
+function clearLegacySampleBookings() {
+  const raw = localStorage.getItem("eventzen_bookings");
+  if (!raw) return;
+
+  try {
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return;
+
+    const isLegacySeed = parsed.length > 0
+      && parsed.every((booking: unknown) => {
+        if (!booking || typeof booking !== "object") return false;
+        const record = booking as Record<string, unknown>;
+        return typeof record.id === "string"
+          && ["1", "2", "3"].includes(record.id)
+          && typeof record.event === "string";
+      });
+
+    if (isLegacySeed) {
+      localStorage.setItem("eventzen_bookings", JSON.stringify([]));
+    }
+  } catch {
+    localStorage.removeItem("eventzen_bookings");
+  }
+}
+
+clearLegacySampleBookings();
 
 // ============ Auth Service ============
 export const authService = {
@@ -228,4 +256,4 @@ export const eventService = createCrudService<Event>("eventzen_events", mockEven
 export const venueService = createCrudService<Venue>("eventzen_venues", mockVenues);
 export const attendeeService = createCrudService<Attendee>("eventzen_attendees", mockAttendees);
 export const vendorService = createCrudService<Vendor>("eventzen_vendors", mockVendors);
-export const bookingService = createCrudService<Booking>("eventzen_bookings", mockBookings);
+export const bookingService = createCrudService<Booking>("eventzen_bookings", []);
