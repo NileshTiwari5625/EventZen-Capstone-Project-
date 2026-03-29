@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,6 +15,18 @@ const Login = () => {
   const [authError, setAuthError] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    const currentUser = authService.getCurrentUser();
+    if (!currentUser) return;
+
+    if (currentUser.role === "admin") {
+      navigate("/admin/events", { replace: true });
+      return;
+    }
+
+    navigate(currentUser.profileCompleted ? "/venues" : "/profile", { replace: true });
+  }, [navigate]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
