@@ -34,5 +34,5 @@ export const mockVendors = [
 export const mockBookings = [
   { id: "1", venue: "Grand Convention Center", event: "Team Building Day", date: "2026-05-20", status: "confirmed" as const, total: 5000 },
   { id: "2", venue: "Skyline Rooftop", event: "Birthday Party", date: "2026-06-15", status: "pending" as const, total: 7000 },
-  { id: "3", venue: "Innovation Hub", event: "Workshop", date: "2026-04-01", status: "completed" as const, total: 2000 },
+  { id: "3", venue: "Innovation Hub", event: "Workshop", date: "2026-02-01", status: "completed" as const, total: 2000 },
 ];
