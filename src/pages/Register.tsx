@@ -12,10 +12,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-<<<<<<< HEAD
   const [phone, setPhone] = useState("");
-=======
->>>>>>> a81c047b61591c4eb76ea0262f78df16ed1199ce
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -23,9 +20,10 @@ const Register = () => {
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     setRegisterError("");
+
     try {
-<<<<<<< HEAD
       const user = authService.register(name, email, password, phone);
+
       if (user.profileCompleted) {
         toast({ title: "Account created!", description: "Welcome to EventZen." });
         navigate("/venues");
@@ -33,13 +31,6 @@ const Register = () => {
         toast({ title: "Account created!", description: "Complete your profile to start booking venues." });
         navigate("/profile");
       }
-=======
-      authService.register(name, email, password);
-      toast({ title: "Account created!", description: "Complete your profile to start booking venues." });
-      navigate("/profile");
-      toast({ title: "Account created!", description: "Welcome to EventZen." });
-      navigate("/venues");
->>>>>>> a81c047b61591c4eb76ea0262f78df16ed1199ce
     } catch (error) {
       const description = error instanceof Error ? error.message : "Please try again.";
       setRegisterError(description);
@@ -66,40 +57,69 @@ const Register = () => {
           <form onSubmit={handleRegister} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
-              <Input id="name" placeholder="John Doe" value={name} onChange={e => {
-                setName(e.target.value);
-                if (registerError) setRegisterError("");
-              }} required />
+              <Input
+                id="name"
+                placeholder="John Doe"
+                value={name}
+                onChange={e => {
+                  setName(e.target.value);
+                  if (registerError) setRegisterError("");
+                }}
+                required
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="you@example.com" value={email} onChange={e => {
-                setEmail(e.target.value);
-                if (registerError) setRegisterError("");
-              }} required />
+              <Input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={e => {
+                  setEmail(e.target.value);
+                  if (registerError) setRegisterError("");
+                }}
+                required
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" placeholder="••••••••" value={password} onChange={e => {
-                setPassword(e.target.value);
-                if (registerError) setRegisterError("");
-              }} required />
+              <Input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={e => {
+                  setPassword(e.target.value);
+                  if (registerError) setRegisterError("");
+                }}
+                required
+              />
             </div>
-<<<<<<< HEAD
             <div className="space-y-2">
               <Label htmlFor="phone">Phone</Label>
-              <Input id="phone" type="tel" placeholder="(555) 123-4567" value={phone} onChange={e => {
-                setPhone(e.target.value);
-                if (registerError) setRegisterError("");
-              }} required />
+              <Input
+                id="phone"
+                type="tel"
+                placeholder="(555) 123-4567"
+                value={phone}
+                onChange={e => {
+                  setPhone(e.target.value);
+                  if (registerError) setRegisterError("");
+                }}
+                required
+              />
             </div>
-=======
->>>>>>> a81c047b61591c4eb76ea0262f78df16ed1199ce
             {registerError && <p className="text-sm text-destructive">{registerError}</p>}
-            <Button type="submit" className="w-full gradient-primary text-primary-foreground border-0">Create Account</Button>
+            <Button type="submit" className="w-full gradient-primary text-primary-foreground border-0">
+              Create Account
+            </Button>
           </form>
           <p className="text-center text-sm text-muted-foreground mt-4">
-            Already have an account? <Link to="/login" className="text-primary hover:underline">Sign in</Link>
+            Already have an account?{" "}
+            <Link to="/login" className="text-primary hover:underline">
+              Sign in
+            </Link>
           </p>
         </CardContent>
       </Card>
