@@ -12,14 +12,32 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    authService.register(name, email, password);
-    toast({ title: "Account created!", description: "Welcome to EventZen." });
-    navigate("/venues");
+    setRegisterError("");
+    try {
+      const user = authService.register(name, email, password, phone);
+      if (user.profileCompleted) {
+        toast({ title: "Account created!", description: "Welcome to EventZen." });
+        navigate("/venues");
+      } else {
+        toast({ title: "Account created!", description: "Complete your profile to start booking venues." });
+        navigate("/profile");
+      }
+    } catch (error) {
+      const description = error instanceof Error ? error.message : "Please try again.";
+      setRegisterError(description);
+      toast({
+        title: "Registration failed",
+        description,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -37,16 +55,33 @@ const Register = () => {
           <form onSubmit={handleRegister} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
-              <Input id="name" placeholder="John Doe" value={name} onChange={e => setName(e.target.value)} required />
+              <Input id="name" placeholder="John Doe" value={name} onChange={e => {
+                setName(e.target.value);
+                if (registerError) setRegisterError("");
+              }} required />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} required />
+              <Input id="email" type="email" placeholder="you@example.com" value={email} onChange={e => {
+                setEmail(e.target.value);
+                if (registerError) setRegisterError("");
+              }} required />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} required />
+              <Input id="password" type="password" placeholder="••••••••" value={password} onChange={e => {
+                setPassword(e.target.value);
+                if (registerError) setRegisterError("");
+              }} required />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Phone</Label>
+              <Input id="phone" type="tel" placeholder="(555) 123-4567" value={phone} onChange={e => {
+                setPhone(e.target.value);
+                if (registerError) setRegisterError("");
+              }} required />
+            </div>
+            {registerError && <p className="text-sm text-destructive">{registerError}</p>}
             <Button type="submit" className="w-full gradient-primary text-primary-foreground border-0">Create Account</Button>
           </form>
           <p className="text-center text-sm text-muted-foreground mt-4">
