@@ -12,6 +12,10 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+<<<<<<< HEAD
+  const [phone, setPhone] = useState("");
+=======
+>>>>>>> a81c047b61591c4eb76ea0262f78df16ed1199ce
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -20,11 +24,22 @@ const Register = () => {
     e.preventDefault();
     setRegisterError("");
     try {
+<<<<<<< HEAD
+      const user = authService.register(name, email, password, phone);
+      if (user.profileCompleted) {
+        toast({ title: "Account created!", description: "Welcome to EventZen." });
+        navigate("/venues");
+      } else {
+        toast({ title: "Account created!", description: "Complete your profile to start booking venues." });
+        navigate("/profile");
+      }
+=======
       authService.register(name, email, password);
       toast({ title: "Account created!", description: "Complete your profile to start booking venues." });
       navigate("/profile");
       toast({ title: "Account created!", description: "Welcome to EventZen." });
       navigate("/venues");
+>>>>>>> a81c047b61591c4eb76ea0262f78df16ed1199ce
     } catch (error) {
       const description = error instanceof Error ? error.message : "Please try again.";
       setRegisterError(description);
@@ -70,6 +85,16 @@ const Register = () => {
                 if (registerError) setRegisterError("");
               }} required />
             </div>
+<<<<<<< HEAD
+            <div className="space-y-2">
+              <Label htmlFor="phone">Phone</Label>
+              <Input id="phone" type="tel" placeholder="(555) 123-4567" value={phone} onChange={e => {
+                setPhone(e.target.value);
+                if (registerError) setRegisterError("");
+              }} required />
+            </div>
+=======
+>>>>>>> a81c047b61591c4eb76ea0262f78df16ed1199ce
             {registerError && <p className="text-sm text-destructive">{registerError}</p>}
             <Button type="submit" className="w-full gradient-primary text-primary-foreground border-0">Create Account</Button>
           </form>
