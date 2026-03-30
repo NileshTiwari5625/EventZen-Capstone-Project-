@@ -12,7 +12,6 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -20,17 +19,12 @@ const Register = () => {
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     setRegisterError("");
-
     try {
-      const user = authService.register(name, email, password, phone);
-
-      if (user.profileCompleted) {
-        toast({ title: "Account created!", description: "Welcome to EventZen." });
-        navigate("/venues", { replace: true });
-      } else {
-        toast({ title: "Account created!", description: "Complete your profile to start booking venues." });
-        navigate("/profile", { replace: true });
-      }
+      authService.register(name, email, password);
+      toast({ title: "Account created!", description: "Complete your profile to start booking venues." });
+      navigate("/profile");
+      toast({ title: "Account created!", description: "Welcome to EventZen." });
+      navigate("/venues");
     } catch (error) {
       const description = error instanceof Error ? error.message : "Please try again.";
       setRegisterError(description);
@@ -44,7 +38,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md elevated-card bg-card/95 backdrop-blur-sm">
+      <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <Link to="/" className="inline-flex items-center justify-center gap-2 mb-2">
             <Sparkles className="h-6 w-6 text-primary" />
@@ -57,76 +51,33 @@ const Register = () => {
           <form onSubmit={handleRegister} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
-              <Input
-                id="name"
-                placeholder="John Doe"
-                value={name}
-                onChange={e => {
-                  setName(e.target.value);
-                  if (registerError) setRegisterError("");
-                }}
-                required
-              />
+              <Input id="name" placeholder="John Doe" value={name} onChange={e => {
+                setName(e.target.value);
+                if (registerError) setRegisterError("");
+              }} required />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={e => {
-                  setEmail(e.target.value);
-                  if (registerError) setRegisterError("");
-                }}
-                required
-              />
+              <Input id="email" type="email" placeholder="you@example.com" value={email} onChange={e => {
+                setEmail(e.target.value);
+                if (registerError) setRegisterError("");
+              }} required />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={e => {
-                  setPassword(e.target.value);
-                  if (registerError) setRegisterError("");
-                }}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone</Label>
-              <Input
-                id="phone"
-                type="tel"
-                placeholder="(555) 123-4567"
-                value={phone}
-                onChange={e => {
-                  setPhone(e.target.value);
-                  if (registerError) setRegisterError("");
-                }}
-                required
-              />
+              <Input id="password" type="password" placeholder="••••••••" value={password} onChange={e => {
+                setPassword(e.target.value);
+                if (registerError) setRegisterError("");
+              }} required />
             </div>
             {registerError && <p className="text-sm text-destructive">{registerError}</p>}
-            <Button type="submit" className="w-full gradient-primary text-primary-foreground border-0">
-              Create Account
-            </Button>
+            <Button type="submit" className="w-full gradient-primary text-primary-foreground border-0">Create Account</Button>
           </form>
           <p className="text-center text-sm text-muted-foreground mt-4">
-            Already have an account?{" "}
-            <Link
-              to="/login"
-              className="text-primary hover:underline"
-              onClick={() => authService.logout()}
-            >
-              Sign in
-            </Link>
+            Already have an account? <Link to="/login" className="text-primary hover:underline">Sign in</Link>
           </p>
         </CardContent>
-      </Card>
+      </Card>                        
     </div>
   );
 };

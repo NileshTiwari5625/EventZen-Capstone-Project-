@@ -3,6 +3,7 @@ import { MapPin, CalendarCheck, User, Sparkles, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { authService } from "@/services/api";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const navItems = [
   { to: "/venues", icon: MapPin, label: "Venues" },
@@ -36,6 +37,7 @@ const CustomerLayout = () => {
                 </Button>
               </Link>
             ))}
+            <ThemeToggle />
             <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={handleLogout}>
               <LogOut className="h-4 w-4" />
             </Button>

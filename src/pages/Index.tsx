@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, Users, Package, ArrowRight, Sparkles, Shield, BarChart3 } from "lucide-react";
 import { motion } from "framer-motion";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const features = [
   { icon: Calendar, title: "Event Scheduling", desc: "Plan and manage events with intuitive scheduling tools." },
@@ -32,6 +33,7 @@ const Index = () => {
           <div className="hidden md:flex items-center gap-6">
             <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Features</a>
             <a href="#stats" className="text-sm text-muted-foreground hover:text-foreground transition-colors">About</a>
+            <ThemeToggle />
             <Link to="/login">
               <Button variant="ghost" size="sm">Log in</Button>
             </Link>
@@ -39,7 +41,8 @@ const Index = () => {
               <Button size="sm">Get Started</Button>
             </Link>
           </div>
-          <div className="md:hidden flex gap-2">
+          <div className="md:hidden flex gap-2 items-center">
+            <ThemeToggle />
             <Link to="/login"><Button variant="ghost" size="sm">Log in</Button></Link>
             <Link to="/register"><Button size="sm">Sign Up</Button></Link>
           </div>
