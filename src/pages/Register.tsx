@@ -26,10 +26,10 @@ const Register = () => {
 
       if (user.profileCompleted) {
         toast({ title: "Account created!", description: "Welcome to EventZen." });
-        navigate("/venues");
+        navigate("/venues", { replace: true });
       } else {
         toast({ title: "Account created!", description: "Complete your profile to start booking venues." });
-        navigate("/profile");
+        navigate("/profile", { replace: true });
       }
     } catch (error) {
       const description = error instanceof Error ? error.message : "Please try again.";
