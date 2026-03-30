@@ -23,8 +23,3 @@
 
 ## Cross-check Reference
 - See `docs/10-Problem-Statement-Traceability.md` for requirement-to-implementation mapping.
-
-## Submission Metadata
-- Repository URL: `<add-public-github-or-gitlab-link>`
-- Screenshot folder: `docs/screenshots/`
-- Final action items: `docs/11-Final-Submission-Action-Items.md`
