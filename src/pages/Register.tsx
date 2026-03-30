@@ -26,10 +26,10 @@ const Register = () => {
 
       if (user.profileCompleted) {
         toast({ title: "Account created!", description: "Welcome to EventZen." });
-        navigate("/venues");
+        navigate("/venues", { replace: true });
       } else {
         toast({ title: "Account created!", description: "Complete your profile to start booking venues." });
-        navigate("/profile");
+        navigate("/profile", { replace: true });
       }
     } catch (error) {
       const description = error instanceof Error ? error.message : "Please try again.";
@@ -44,7 +44,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md elevated-card bg-card/95 backdrop-blur-sm">
         <CardHeader className="text-center">
           <Link to="/" className="inline-flex items-center justify-center gap-2 mb-2">
             <Sparkles className="h-6 w-6 text-primary" />
@@ -117,7 +117,11 @@ const Register = () => {
           </form>
           <p className="text-center text-sm text-muted-foreground mt-4">
             Already have an account?{" "}
-            <Link to="/login" className="text-primary hover:underline">
+            <Link
+              to="/login"
+              className="text-primary hover:underline"
+              onClick={() => authService.logout()}
+            >
               Sign in
             </Link>
           </p>
