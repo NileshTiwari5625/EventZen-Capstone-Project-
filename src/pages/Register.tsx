@@ -122,14 +122,8 @@ const Register = () => {
               Create Account
             </Button>
           </form>
-          <p className="text-center text-sm text-muted-foreground mt-4">
-            Already have an account?{" "}
-            <Link
-              to="/login"
-              className="text-primary hover:underline"
-            >
-              Sign in
-            </Link>
+          <p className="mt-4 text-center text-sm text-muted-foreground">
+            Already have an account? <Link to="/login" className="text-primary hover:underline">Sign in</Link>
           </p>
         </CardContent>
       </Card>
