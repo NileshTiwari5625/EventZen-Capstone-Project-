@@ -102,6 +102,20 @@
   ::selection {
     background: hsl(var(--primary) / 0.2);
   }
+  input, textarea, select {
+    @apply bg-background text-foreground;
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  select:-webkit-autofill {
+    -webkit-text-fill-color: hsl(var(--foreground)) !important;
+    -webkit-box-shadow: 0 0 0px 1000px hsl(var(--background)) inset !important;
+    transition: background-color 9999s ease-in-out 0s;
+    caret-color: hsl(var(--foreground));
+    border-color: hsl(var(--input)) !important;
+  }
 }
 
 @layer utilities {

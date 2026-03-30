@@ -70,10 +70,10 @@ const Login = () => {
           <CardDescription>Sign in to your account</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-4" autoComplete="off">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="you@example.com" value={email} onChange={e => {
+              <Input id="email" type="email" autoComplete="off" placeholder="you@example.com" value={email} onChange={e => {
                 setEmail(e.target.value);
                 if (authError) setAuthError("");
               }} required />
@@ -81,7 +81,7 @@ const Login = () => {
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <div className="relative">
-                <Input id="password" type={showPassword ? "text" : "password"} placeholder="••••••••" value={password} onChange={e => {
+                <Input id="password" type={showPassword ? "text" : "password"} autoComplete="current-password" placeholder="••••••••" value={password} onChange={e => {
                   setPassword(e.target.value);
                   if (authError) setAuthError("");
                 }} required />
