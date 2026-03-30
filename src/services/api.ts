@@ -181,7 +181,7 @@ export const authService = {
     return user;
   },
 
-  register(name: string, email: string, password: string, phone: string): User {
+  register(name: string, email: string, password: string, phone?: string): User {
     const users = getStore<StoredAuthUser>("eventzen_auth_users", []);
     const normalizedEmail = email.trim().toLowerCase();
     const emailAlreadyExists = users.some(user => user.email === normalizedEmail);
@@ -190,13 +190,15 @@ export const authService = {
       throw new Error("An account with this email already exists.");
     }
 
+    const normalizedPhone = phone?.trim() ?? "";
+
     const newStoredUser: StoredAuthUser = {
       id: crypto.randomUUID(),
       name: name.trim(),
       email: normalizedEmail,
       password,
-      phone: phone.trim(),
-      profileCompleted: Boolean(phone.trim()),
+      phone: normalizedPhone || undefined,
+      profileCompleted: Boolean(normalizedPhone),
       role: "customer",
     };
 
