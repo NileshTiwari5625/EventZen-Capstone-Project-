@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Sparkles, Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { authService } from "@/services/api";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -23,13 +24,13 @@ const Login = () => {
       const user = authService.login(email, password);
       if (user.role === "admin") {
         toast({ title: "Welcome back, Admin!" });
-        navigate("/admin/events");
+        navigate("/admin/events", { replace: true });
       } else if (!user.profileCompleted) {
         toast({ title: "Profile incomplete", description: "Please complete your profile before booking venues." });
-        navigate("/profile");
+        navigate("/profile", { replace: true });
       } else {
         toast({ title: "Welcome back!" });
-        navigate("/venues");
+        navigate("/venues", { replace: true });
       }
     } catch (error) {
       const description = error instanceof Error ? error.message : "Please check your credentials and try again.";
@@ -44,8 +45,11 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
+      <Card className="w-full max-w-md elevated-card bg-card/95 backdrop-blur-sm">
+        <CardHeader className="text-center relative">
+          <div className="absolute right-0 top-0">
+            <ThemeToggle />
+          </div>
           <Link to="/" className="inline-flex items-center justify-center gap-2 mb-2">
             <Sparkles className="h-6 w-6 text-primary" />
             <span className="font-heading text-xl font-bold">EventZen</span>
