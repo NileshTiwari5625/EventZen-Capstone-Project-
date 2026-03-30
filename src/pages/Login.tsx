@@ -23,13 +23,13 @@ const Login = () => {
       const user = authService.login(email, password);
       if (user.role === "admin") {
         toast({ title: "Welcome back, Admin!" });
-        navigate("/admin/events");
+        navigate("/admin/events", { replace: true });
       } else if (!user.profileCompleted) {
         toast({ title: "Profile incomplete", description: "Please complete your profile before booking venues." });
-        navigate("/profile");
+        navigate("/profile", { replace: true });
       } else {
         toast({ title: "Welcome back!" });
-        navigate("/venues");
+        navigate("/venues", { replace: true });
       }
     } catch (error) {
       const description = error instanceof Error ? error.message : "Please check your credentials and try again.";

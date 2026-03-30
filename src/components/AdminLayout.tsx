@@ -17,7 +17,7 @@ const AdminLayout = () => {
 
   const handleLogout = () => {
     authService.logout();
-    navigate("/login");
+    navigate("/login", { replace: true });
   };
 
   return (
