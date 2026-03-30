@@ -2,6 +2,7 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Calendar, MapPin, Users, Package, Sparkles, LogOut, LayoutDashboard } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { authService } from "@/services/api";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const navItems = [
   { to: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
@@ -43,7 +44,10 @@ const AdminLayout = () => {
             </Link>
           ))}
         </nav>
-        <div className="p-3 border-t border-sidebar-border">
+        <div className="p-3 border-t border-sidebar-border space-y-2">
+          <div className="flex justify-end">
+            <ThemeToggle className="text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent" />
+          </div>
           <button onClick={handleLogout} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent transition-colors">
             <LogOut className="h-4 w-4" />
             Sign Out
@@ -52,15 +56,18 @@ const AdminLayout = () => {
       </aside>
 
       {/* Mobile header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-sidebar text-sidebar-foreground border-b border-sidebar-border">
+      <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-sidebar/95 text-sidebar-foreground border-b border-sidebar-border backdrop-blur">
         <div className="flex items-center justify-between px-4 h-14">
           <div className="flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-sidebar-primary" />
             <span className="font-heading font-bold">EventZen Admin</span>
           </div>
-          <button onClick={handleLogout} className="text-sidebar-foreground/70">
-            <LogOut className="h-4 w-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle className="text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent" />
+            <button onClick={handleLogout} className="text-sidebar-foreground/70">
+              <LogOut className="h-4 w-4" />
+            </button>
+          </div>
         </div>
         <div className="flex overflow-x-auto px-2 pb-2 gap-1">
           {navItems.map(item => (

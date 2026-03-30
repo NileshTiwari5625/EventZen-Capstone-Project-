@@ -115,6 +115,47 @@ function clearLegacySampleBookings() {
 
 clearLegacySampleBookings();
 
+function resetLegacySampleVenues() {
+  const raw = localStorage.getItem("eventzen_venues");
+  if (!raw) return;
+
+  try {
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return;
+
+    const legacyNames = new Set([
+      "Grand Convention Center",
+      "Riverside Park Amphitheater",
+      "The Ritz Ballroom",
+      "Innovation Hub",
+      "Crystal Palace",
+      "Skyline Rooftop",
+      "The Taj Mahal Palace",
+      "ITC Gardenia",
+      "The Leela Ambience Gurugram",
+      "Taj Krishna",
+      "Hyatt Regency",
+      "JW Marriott",
+      "The Westin Pune Koregaon Park",
+      "ITC Sonar",
+    ]);
+
+    const hasLegacyVenues = parsed.length > 0 && parsed.every((venue: unknown) => {
+      if (!venue || typeof venue !== "object") return false;
+      const record = venue as Record<string, unknown>;
+      return typeof record.name === "string" && legacyNames.has(record.name);
+    });
+
+    if (hasLegacyVenues) {
+      localStorage.setItem("eventzen_venues", JSON.stringify(mockVenues));
+    }
+  } catch {
+    localStorage.setItem("eventzen_venues", JSON.stringify(mockVenues));
+  }
+}
+
+resetLegacySampleVenues();
+
 // ============ Auth Service ============
 export const authService = {
   login(email: string, password: string): User {
