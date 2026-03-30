@@ -13,6 +13,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 
 const INDIAN_CITIES = ["Mumbai", "Bengaluru", "New Delhi", "Hyderabad", "Chennai", "Kolkata", "Pune"];
+const FALLBACK_VENUE_IMAGE = "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=500&fit=crop";
 
 const BrowseVenues = () => {
   const [venues] = useState<Venue[]>(venueService.getAll());
@@ -137,7 +138,17 @@ const BrowseVenues = () => {
         {filtered.map(venue => (
           <Card key={venue.id} className="overflow-hidden group elevated-card">
             <div className="aspect-video overflow-hidden">
-              <img src={venue.image} alt={venue.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+              <img
+                src={venue.image}
+                alt={venue.name}
+                loading="lazy"
+                onError={event => {
+                  const target = event.currentTarget;
+                  if (target.src === FALLBACK_VENUE_IMAGE) return;
+                  target.src = FALLBACK_VENUE_IMAGE;
+                }}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
             </div>
             <CardContent className="pt-4 space-y-3">
               <div>
