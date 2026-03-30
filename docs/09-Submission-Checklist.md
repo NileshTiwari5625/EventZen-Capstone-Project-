@@ -13,8 +13,18 @@
 - [x] Wireframe design document
 - [x] User flow document
 - [x] Dockerization files and run instructions
+- [x] Problem statement traceability document
 
 ## Final Manual Edits Before Submission
 1. Replace placeholder author name with your details.
 2. Insert latest UI screenshots from your running app.
 3. Add your final GitHub/GitLab repository URL.
+
+
+## Cross-check Reference
+- See `docs/10-Problem-Statement-Traceability.md` for requirement-to-implementation mapping.
+
+## Submission Metadata
+- Repository URL: `<add-public-github-or-gitlab-link>`
+- Screenshot folder: `docs/screenshots/`
+- Final action items: `docs/11-Final-Submission-Action-Items.md`
