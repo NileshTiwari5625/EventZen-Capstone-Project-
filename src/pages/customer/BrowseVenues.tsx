@@ -135,7 +135,7 @@ const BrowseVenues = () => {
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filtered.map(venue => (
-          <Card key={venue.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
+          <Card key={venue.id} className="overflow-hidden group elevated-card">
             <div className="aspect-video overflow-hidden">
               <img src={venue.image} alt={venue.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
             </div>

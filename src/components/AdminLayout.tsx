@@ -52,7 +52,7 @@ const AdminLayout = () => {
       </aside>
 
       {/* Mobile header */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-sidebar text-sidebar-foreground border-b border-sidebar-border">
+      <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-sidebar/95 text-sidebar-foreground border-b border-sidebar-border backdrop-blur">
         <div className="flex items-center justify-between px-4 h-14">
           <div className="flex items-center gap-2">
             <Sparkles className="h-5 w-5 text-sidebar-primary" />

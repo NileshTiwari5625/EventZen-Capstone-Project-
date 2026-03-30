@@ -23,7 +23,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50 border-b border-border bg-background/80 backdrop-blur-md">
+      <nav className="fixed top-0 w-full z-50 glass-nav">
         <div className="container mx-auto flex items-center justify-between h-16 px-4">
           <Link to="/" className="flex items-center gap-2">
             <Sparkles className="h-6 w-6 text-primary" />
@@ -81,7 +81,7 @@ const Index = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((s, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} viewport={{ once: true }}
-                className="text-center p-6 rounded-xl bg-card border border-border">
+                className="text-center p-6 rounded-xl bg-card elevated-card">
                 <div className="font-heading text-3xl font-bold text-gradient mb-1">{s.value}</div>
                 <div className="text-sm text-muted-foreground">{s.label}</div>
               </motion.div>
@@ -100,7 +100,7 @@ const Index = () => {
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {features.map((f, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} viewport={{ once: true }}
-                className="p-6 rounded-xl bg-card border border-border hover:border-primary/30 hover:shadow-lg transition-all group">
+                className="p-6 rounded-xl bg-card elevated-card hover:border-primary/30 group">
                 <div className="w-10 h-10 rounded-lg gradient-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <f.icon className="h-5 w-5 text-primary-foreground" />
                 </div>
