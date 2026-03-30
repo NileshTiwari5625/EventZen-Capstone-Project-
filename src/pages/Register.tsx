@@ -46,10 +46,7 @@ const Register = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <Card className="w-full max-w-md elevated-card bg-card/95 backdrop-blur-sm">
-        <CardHeader className="text-center relative">
-          <div className="absolute right-0 top-0">
-            <ThemeToggle />
-          </div>
+        <CardHeader className="text-center">
           <Link to="/" className="inline-flex items-center justify-center gap-2 mb-2">
             <Sparkles className="h-6 w-6 text-primary" />
             <span className="font-heading text-xl font-bold">EventZen</span>

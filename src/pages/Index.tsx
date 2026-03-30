@@ -103,9 +103,9 @@ const Index = () => {
           <div className="grid md:grid-cols-2 gap-6">
             {launchHighlights.map((item, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} viewport={{ once: true }}
-                className="p-6 rounded-xl bg-card elevated-card text-left">
-                <div className="font-heading text-lg font-semibold mb-2">{item.title}</div>
-                <div className="text-sm text-muted-foreground">{item.desc}</div>
+                className="text-center p-6 rounded-xl bg-card elevated-card">
+                <div className="font-heading text-3xl font-bold text-gradient mb-1">{s.value}</div>
+                <div className="text-sm text-muted-foreground">{s.label}</div>
               </motion.div>
             ))}
           </div>

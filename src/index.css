@@ -93,7 +93,10 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
-    background-image: var(--bg-pattern);
+    background-image:
+      radial-gradient(circle at 0% 0%, hsl(245 85% 95%) 0%, transparent 32%),
+      radial-gradient(circle at 100% 0%, hsl(190 70% 95%) 0%, transparent 30%),
+      radial-gradient(circle at 50% 100%, hsl(280 70% 96%) 0%, transparent 36%);
     background-attachment: fixed;
   }
   h1, h2, h3, h4, h5, h6 {
@@ -101,19 +104,6 @@
   }
   ::selection {
     background: hsl(var(--primary) / 0.2);
-  }
-  input, textarea, select {
-    @apply bg-background text-foreground;
-  }
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  textarea:-webkit-autofill,
-  select:-webkit-autofill {
-    -webkit-text-fill-color: hsl(var(--foreground));
-    -webkit-box-shadow: 0 0 0px 1000px hsl(var(--background)) inset;
-    transition: background-color 9999s ease-in-out 0s;
-    caret-color: hsl(var(--foreground));
   }
 }
 
@@ -131,10 +121,10 @@
     background-clip: text;
   }
   .glass-nav {
-    @apply border border-white/40 dark:border-white/10 bg-background/75 dark:bg-background/60 backdrop-blur-xl shadow-sm;
+    @apply border border-white/40 bg-background/75 backdrop-blur-xl shadow-sm;
   }
   .elevated-card {
-    @apply border border-white/40 dark:border-white/10 shadow-[0_10px_30px_-16px_hsl(var(--foreground)/0.25)] transition-all duration-300 hover:shadow-[0_18px_40px_-18px_hsl(var(--foreground)/0.35)] hover:-translate-y-0.5;
+    @apply border border-white/40 shadow-[0_10px_30px_-16px_hsl(var(--foreground)/0.25)] transition-all duration-300 hover:shadow-[0_18px_40px_-18px_hsl(var(--foreground)/0.35)] hover:-translate-y-0.5;
   }
 }
 
