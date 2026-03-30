@@ -14,16 +14,16 @@ const features = [
 ];
 
 const launchHighlights = [
-  { title: "Smart booking flow", desc: "City-based venue discovery with booking dialog and date validation." },
-  { title: "Role-based dashboards", desc: "Dedicated customer and admin areas with protected routing." },
-  { title: "Production-ready UI", desc: "Light/dark mode support, responsive design, and reusable components." },
-  { title: "Submission checklist ready", desc: "Clean structure for showcasing features in your final capstone demo." },
+  { title: "City-first venue discovery", desc: "Filter venues by city and instantly narrow options by name or location." },
+  { title: "Trust signals at a glance", desc: "Compare capacity, ratings, amenities, and daily pricing before booking." },
+  { title: "Guided booking workflow", desc: "Book with event name + date validation to reduce invalid requests." },
+  { title: "Role-based experience", desc: "Customers and admins get focused dashboards for their daily tasks." },
 ];
 
 const whatsNew = [
-  "New dark mode toggle available in navbar and auth screens",
-  "Improved booking form with calendar date picker and validation",
-  "Expanded Indian venue catalog with city-wise options",
+  "Venue cards now show stronger booking details for faster decisions",
+  "City filters and quick chips help you discover hotels in seconds",
+  "Booking flow highlights transparent pricing and amenity coverage",
 ];
 
 const Index = () => {
@@ -81,8 +81,8 @@ const Index = () => {
               </Link>
             </div>
 
-            <div className="mt-8 rounded-xl bg-card/80 elevated-card p-4 text-left">
-              <p className="text-sm font-semibold mb-2">What’s new in this build</p>
+            <div className="mt-12 rounded-xl bg-card/80 elevated-card p-4 text-left">
+              <p className="text-sm font-semibold mb-2">Why teams choose EventZen</p>
               <ul className="space-y-1 text-sm text-muted-foreground list-disc pl-5">
                 {whatsNew.map(item => <li key={item}>{item}</li>)}
               </ul>
@@ -91,13 +91,13 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Submission highlights */}
+      {/* Value highlights */}
       <section id="highlights" className="py-16 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-10">
-            <h2 className="font-heading text-3xl font-bold mb-3">Why EventZen is submission-ready</h2>
+            <h2 className="font-heading text-3xl font-bold mb-3">Plan smarter, book faster</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Built as a practical first application with clear workflows, polished UI, and demo-friendly modules.
+              From discovery to reservation, EventZen focuses on practical venue selection and booking confidence.
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-6">

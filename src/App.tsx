@@ -54,7 +54,6 @@ const App = () => (
               <CustomerLayout />
             </ProtectedRoute>
           }>
-            <Route index element={<Navigate to="/venues" replace />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/venues" element={
               <ProfileCompletionRoute>
