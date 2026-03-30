@@ -50,7 +50,7 @@ const Profile = () => {
         <p className="text-muted-foreground text-sm">Manage your account settings</p>
       </div>
 
-      <Card>
+      <Card className="elevated-card bg-card/95">
         <CardHeader>
           <CardTitle className="font-heading">Personal Information</CardTitle>
         </CardHeader>
@@ -90,7 +90,7 @@ const Profile = () => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="elevated-card bg-card/95">
         <CardHeader>
           <CardTitle className="font-heading">Change Password</CardTitle>
         </CardHeader>
