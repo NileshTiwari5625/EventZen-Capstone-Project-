@@ -18,6 +18,11 @@ const Register = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const goToSignIn = () => {
+    authService.logout();
+    navigate("/login", { replace: true });
+  };
+
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     setRegisterError("");
@@ -124,13 +129,13 @@ const Register = () => {
           </form>
           <p className="text-center text-sm text-muted-foreground mt-4">
             Already have an account?{" "}
-            <Link
-              to="/login"
+            <button
+              type="button"
               className="text-primary hover:underline"
-              onClick={() => authService.logout()}
+              onClick={goToSignIn}
             >
               Sign in
-            </Link>
+            </button>
           </p>
         </CardContent>
       </Card>
