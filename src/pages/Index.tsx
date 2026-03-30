@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, Users, Package, ArrowRight, Sparkles, Shield, BarChart3 } from "lucide-react";
 import { motion } from "framer-motion";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const features = [
   { icon: Calendar, title: "Event Scheduling", desc: "Plan and manage events with intuitive scheduling tools." },
@@ -12,18 +13,24 @@ const features = [
   { icon: BarChart3, title: "Analytics & Reports", desc: "Gain insights with detailed post-event analysis." },
 ];
 
-const stats = [
-  { value: "500+", label: "Events Managed" },
-  { value: "10K+", label: "Attendees Served" },
-  { value: "200+", label: "Venues Listed" },
-  { value: "98%", label: "Satisfaction Rate" },
+const launchHighlights = [
+  { title: "Smart booking flow", desc: "City-based venue discovery with booking dialog and date validation." },
+  { title: "Role-based dashboards", desc: "Dedicated customer and admin areas with protected routing." },
+  { title: "Production-ready UI", desc: "Light/dark mode support, responsive design, and reusable components." },
+  { title: "Submission checklist ready", desc: "Clean structure for showcasing features in your final capstone demo." },
+];
+
+const whatsNew = [
+  "New dark mode toggle available in navbar and auth screens",
+  "Improved booking form with calendar date picker and validation",
+  "Expanded Indian venue catalog with city-wise options",
 ];
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50 border-b border-border bg-background/80 backdrop-blur-md">
+      <nav className="fixed top-0 w-full z-50 glass-nav">
         <div className="container mx-auto flex items-center justify-between h-16 px-4">
           <Link to="/" className="flex items-center gap-2">
             <Sparkles className="h-6 w-6 text-primary" />
@@ -31,7 +38,8 @@ const Index = () => {
           </Link>
           <div className="hidden md:flex items-center gap-6">
             <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Features</a>
-            <a href="#stats" className="text-sm text-muted-foreground hover:text-foreground transition-colors">About</a>
+            <a href="#highlights" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Highlights</a>
+            <ThemeToggle />
             <Link to="/login">
               <Button variant="ghost" size="sm">Log in</Button>
             </Link>
@@ -39,7 +47,8 @@ const Index = () => {
               <Button size="sm">Get Started</Button>
             </Link>
           </div>
-          <div className="md:hidden flex gap-2">
+          <div className="md:hidden flex gap-2 items-center">
+            <ThemeToggle />
             <Link to="/login"><Button variant="ghost" size="sm">Log in</Button></Link>
             <Link to="/register"><Button size="sm">Sign Up</Button></Link>
           </div>
@@ -71,19 +80,32 @@ const Index = () => {
                 </Button>
               </Link>
             </div>
+
+            <div className="mt-8 rounded-xl bg-card/80 elevated-card p-4 text-left">
+              <p className="text-sm font-semibold mb-2">What’s new in this build</p>
+              <ul className="space-y-1 text-sm text-muted-foreground list-disc pl-5">
+                {whatsNew.map(item => <li key={item}>{item}</li>)}
+              </ul>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Stats */}
-      <section id="stats" className="py-16 px-4">
+      {/* Submission highlights */}
+      <section id="highlights" className="py-16 px-4">
         <div className="container mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((s, i) => (
+          <div className="text-center mb-10">
+            <h2 className="font-heading text-3xl font-bold mb-3">Why EventZen is submission-ready</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Built as a practical first application with clear workflows, polished UI, and demo-friendly modules.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {launchHighlights.map((item, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }} viewport={{ once: true }}
-                className="text-center p-6 rounded-xl bg-card border border-border">
-                <div className="font-heading text-3xl font-bold text-gradient mb-1">{s.value}</div>
-                <div className="text-sm text-muted-foreground">{s.label}</div>
+                className="p-6 rounded-xl bg-card elevated-card text-left">
+                <div className="font-heading text-lg font-semibold mb-2">{item.title}</div>
+                <div className="text-sm text-muted-foreground">{item.desc}</div>
               </motion.div>
             ))}
           </div>
@@ -100,7 +122,7 @@ const Index = () => {
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {features.map((f, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} viewport={{ once: true }}
-                className="p-6 rounded-xl bg-card border border-border hover:border-primary/30 hover:shadow-lg transition-all group">
+                className="p-6 rounded-xl bg-card elevated-card hover:border-primary/30 group">
                 <div className="w-10 h-10 rounded-lg gradient-primary flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <f.icon className="h-5 w-5 text-primary-foreground" />
                 </div>

@@ -5,9 +5,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Search, MapPin, Users, Star, DollarSign } from "lucide-react";
+import { Search, MapPin, Users, Star, DollarSign, Calendar as CalendarIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import CrudDialog from "@/components/CrudDialog";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
 
 const INDIAN_CITIES = ["Mumbai", "Bengaluru", "New Delhi", "Hyderabad", "Chennai", "Kolkata", "Pune"];
 
@@ -19,6 +22,7 @@ const BrowseVenues = () => {
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
   const [bookingForm, setBookingForm] = useState({ event: "", date: "" });
   const { toast } = useToast();
+  const today = new Date();
 
   const cityFiltered = useMemo(() => {
     if (!cityQuery.trim()) return venues;
@@ -40,10 +44,31 @@ const BrowseVenues = () => {
 
   const handleBook = () => {
     if (!selectedVenue) return;
+    const normalizedEvent = bookingForm.event.trim();
+    const hasValidDate = /^\d{4}-\d{2}-\d{2}$/.test(bookingForm.date)
+      && !Number.isNaN(new Date(bookingForm.date).getTime());
+
+    if (!normalizedEvent) {
+      toast({
+        title: "Event name is required",
+        description: "Please add a valid event name before submitting.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!hasValidDate) {
+      toast({
+        title: "Invalid date",
+        description: "Please select a valid booking date from the calendar.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     bookingService.create({
       venue: selectedVenue.name,
-      event: bookingForm.event,
+      event: normalizedEvent,
       date: bookingForm.date,
       status: "pending",
       total: selectedVenue.pricePerDay,
@@ -110,7 +135,7 @@ const BrowseVenues = () => {
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filtered.map(venue => (
-          <Card key={venue.id} className="overflow-hidden group hover:shadow-lg transition-shadow">
+          <Card key={venue.id} className="overflow-hidden group elevated-card">
             <div className="aspect-video overflow-hidden">
               <img src={venue.image} alt={venue.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
             </div>
@@ -149,7 +174,43 @@ const BrowseVenues = () => {
         </div>
         <div className="space-y-2">
           <Label>Date</Label>
-          <Input type="date" value={bookingForm.date} onChange={e => setBookingForm({ ...bookingForm, date: e.target.value })} />
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                type="button"
+                variant="outline"
+                className={cn(
+                  "w-full justify-start text-left font-normal",
+                  !bookingForm.date && "text-muted-foreground"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {bookingForm.date
+                  ? new Date(`${bookingForm.date}T00:00:00`).toLocaleDateString("en-IN", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })
+                  : "Select date"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={bookingForm.date ? new Date(`${bookingForm.date}T00:00:00`) : undefined}
+                onSelect={date => {
+                  if (!date) return;
+                  const year = date.getFullYear();
+                  const month = `${date.getMonth() + 1}`.padStart(2, "0");
+                  const day = `${date.getDate()}`.padStart(2, "0");
+                  setBookingForm({ ...bookingForm, date: `${year}-${month}-${day}` });
+                }}
+                disabled={date => date < new Date(today.getFullYear(), today.getMonth(), today.getDate())}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+          <p className="text-xs text-muted-foreground">Choose a date from the calendar. Manual invalid text is not allowed.</p>
         </div>
       </CrudDialog>
     </div>
