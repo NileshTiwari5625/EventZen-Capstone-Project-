@@ -17,7 +17,7 @@ const CustomerLayout = () => {
 
   const handleLogout = () => {
     authService.logout();
-    navigate("/login", { replace: true });
+    navigate("/login");
   };
 
   return (

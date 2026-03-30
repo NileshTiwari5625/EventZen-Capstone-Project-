@@ -18,11 +18,6 @@ const Register = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const goToSignIn = () => {
-    authService.logout();
-    navigate("/login", { replace: true });
-  };
-
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     setRegisterError("");
@@ -32,10 +27,10 @@ const Register = () => {
 
       if (user.profileCompleted) {
         toast({ title: "Account created!", description: "Welcome to EventZen." });
-        navigate("/venues", { replace: true });
+        navigate("/venues");
       } else {
         toast({ title: "Account created!", description: "Complete your profile to start booking venues." });
-        navigate("/profile", { replace: true });
+        navigate("/profile");
       }
     } catch (error) {
       const description = error instanceof Error ? error.message : "Please try again.";
@@ -129,13 +124,12 @@ const Register = () => {
           </form>
           <p className="text-center text-sm text-muted-foreground mt-4">
             Already have an account?{" "}
-            <button
-              type="button"
+            <Link
+              to="/login"
               className="text-primary hover:underline"
-              onClick={goToSignIn}
             >
               Sign in
-            </button>
+            </Link>
           </p>
         </CardContent>
       </Card>
