@@ -81,7 +81,7 @@ const Index = () => {
               </Link>
             </div>
 
-            <div className="mt-12 rounded-xl bg-card/80 elevated-card p-4 text-left">
+            <div className="mt-8 rounded-xl bg-card/80 elevated-card p-4 text-left">
               <p className="text-sm font-semibold mb-2">Why teams choose EventZen</p>
               <ul className="space-y-1 text-sm text-muted-foreground list-disc pl-5">
                 {whatsNew.map(item => <li key={item}>{item}</li>)}
