@@ -22,7 +22,7 @@ const Login = () => {
     if (!currentUser) return;
 
     if (currentUser.role === "admin") {
-      navigate("/admin/events", { replace: true });
+      navigate("/admin/dashboard", { replace: true });
       return;
     }
 
@@ -36,7 +36,7 @@ const Login = () => {
       const user = authService.login(email, password);
       if (user.role === "admin") {
         toast({ title: "Welcome back, Admin!" });
-        navigate("/admin/events", { replace: true });
+        navigate("/admin/dashboard", { replace: true });
       } else if (!user.profileCompleted) {
         toast({ title: "Profile incomplete", description: "Please complete your profile before booking venues." });
         navigate("/profile", { replace: true });
