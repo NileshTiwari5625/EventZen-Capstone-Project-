@@ -50,7 +50,7 @@ const Profile = () => {
         <p className="text-muted-foreground text-sm">Manage your account settings</p>
       </div>
 
-      <Card>
+      <Card className="elevated-card bg-card/95">
         <CardHeader>
           <CardTitle className="font-heading">Personal Information</CardTitle>
         </CardHeader>
@@ -76,7 +76,7 @@ const Profile = () => {
             </div>
             <div className="space-y-2">
               <Label>Email</Label>
-              <Input value={email} onChange={e => setEmail(e.target.value)} type="email" />
+              <Input value={email} onChange={e => setEmail(e.target.value)} type="email" autoComplete="off" />
             </div>
             <div className="space-y-2">
               <Label>Phone</Label>
@@ -90,14 +90,14 @@ const Profile = () => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="elevated-card bg-card/95">
         <CardHeader>
           <CardTitle className="font-heading">Change Password</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2"><Label>Current Password</Label><Input type="password" placeholder="••••••••" /></div>
-          <div className="space-y-2"><Label>New Password</Label><Input type="password" placeholder="••••••••" /></div>
-          <div className="space-y-2"><Label>Confirm Password</Label><Input type="password" placeholder="••••••••" /></div>
+          <div className="space-y-2"><Label>Current Password</Label><Input type="password" autoComplete="current-password" placeholder="••••••••" /></div>
+          <div className="space-y-2"><Label>New Password</Label><Input type="password" autoComplete="new-password" placeholder="••••••••" /></div>
+          <div className="space-y-2"><Label>Confirm Password</Label><Input type="password" autoComplete="new-password" placeholder="••••••••" /></div>
           <Button variant="outline" onClick={() => toast({ title: "Password updated!" })}>Update Password</Button>
         </CardContent>
       </Card>

@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { authService } from "@/services/api";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -17,6 +18,11 @@ const Register = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const goToSignIn = () => {
+    authService.logout();
+    navigate("/login", { replace: true });
+  };
+
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
     setRegisterError("");
@@ -26,10 +32,10 @@ const Register = () => {
 
       if (user.profileCompleted) {
         toast({ title: "Account created!", description: "Welcome to EventZen." });
-        navigate("/venues");
+        navigate("/venues", { replace: true });
       } else {
         toast({ title: "Account created!", description: "Complete your profile to start booking venues." });
-        navigate("/profile");
+        navigate("/profile", { replace: true });
       }
     } catch (error) {
       const description = error instanceof Error ? error.message : "Please try again.";
@@ -44,8 +50,11 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
+      <Card className="w-full max-w-md elevated-card bg-card/95 backdrop-blur-sm">
+        <CardHeader className="text-center relative">
+          <div className="absolute right-0 top-0">
+            <ThemeToggle />
+          </div>
           <Link to="/" className="inline-flex items-center justify-center gap-2 mb-2">
             <Sparkles className="h-6 w-6 text-primary" />
             <span className="font-heading text-xl font-bold">EventZen</span>
@@ -54,7 +63,7 @@ const Register = () => {
           <CardDescription>Get started with EventZen</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleRegister} className="space-y-4">
+          <form onSubmit={handleRegister} className="space-y-4" autoComplete="off">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
               <Input
@@ -73,6 +82,7 @@ const Register = () => {
               <Input
                 id="email"
                 type="email"
+                autoComplete="off"
                 placeholder="you@example.com"
                 value={email}
                 onChange={e => {
@@ -87,6 +97,7 @@ const Register = () => {
               <Input
                 id="password"
                 type="password"
+                autoComplete="new-password"
                 placeholder="••••••••"
                 value={password}
                 onChange={e => {
@@ -101,6 +112,7 @@ const Register = () => {
               <Input
                 id="phone"
                 type="tel"
+                autoComplete="off"
                 placeholder="(555) 123-4567"
                 value={phone}
                 onChange={e => {
@@ -117,12 +129,16 @@ const Register = () => {
           </form>
           <p className="text-center text-sm text-muted-foreground mt-4">
             Already have an account?{" "}
-            <Link to="/login" className="text-primary hover:underline">
+            <button
+              type="button"
+              className="text-primary hover:underline"
+              onClick={goToSignIn}
+            >
               Sign in
-            </Link>
+            </button>
           </p>
         </CardContent>
-      </Card>
+      </Card>                        
     </div>
   );
 };

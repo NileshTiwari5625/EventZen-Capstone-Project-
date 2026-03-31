@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Sparkles, Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { authService } from "@/services/api";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,6 +17,18 @@ const Login = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  useEffect(() => {
+    const currentUser = authService.getCurrentUser();
+    if (!currentUser) return;
+
+    if (currentUser.role === "admin") {
+      navigate("/admin/dashboard", { replace: true });
+      return;
+    }
+
+    navigate(currentUser.profileCompleted ? "/venues" : "/profile", { replace: true });
+  }, [navigate]);
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError("");
@@ -23,13 +36,13 @@ const Login = () => {
       const user = authService.login(email, password);
       if (user.role === "admin") {
         toast({ title: "Welcome back, Admin!" });
-        navigate("/admin/events");
+        navigate("/admin/dashboard", { replace: true });
       } else if (!user.profileCompleted) {
         toast({ title: "Profile incomplete", description: "Please complete your profile before booking venues." });
-        navigate("/profile");
+        navigate("/profile", { replace: true });
       } else {
         toast({ title: "Welcome back!" });
-        navigate("/venues");
+        navigate("/venues", { replace: true });
       }
     } catch (error) {
       const description = error instanceof Error ? error.message : "Please check your credentials and try again.";
@@ -44,8 +57,11 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
+      <Card className="w-full max-w-md elevated-card bg-card/95 backdrop-blur-sm">
+        <CardHeader className="text-center relative">
+          <div className="absolute right-0 top-0">
+            <ThemeToggle />
+          </div>
           <Link to="/" className="inline-flex items-center justify-center gap-2 mb-2">
             <Sparkles className="h-6 w-6 text-primary" />
             <span className="font-heading text-xl font-bold">EventZen</span>
@@ -54,10 +70,10 @@ const Login = () => {
           <CardDescription>Sign in to your account</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-4" autoComplete="off">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="you@example.com" value={email} onChange={e => {
+              <Input id="email" type="email" autoComplete="off" placeholder="you@example.com" value={email} onChange={e => {
                 setEmail(e.target.value);
                 if (authError) setAuthError("");
               }} required />
@@ -65,7 +81,7 @@ const Login = () => {
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <div className="relative">
-                <Input id="password" type={showPassword ? "text" : "password"} placeholder="••••••••" value={password} onChange={e => {
+                <Input id="password" type={showPassword ? "text" : "password"} autoComplete="current-password" placeholder="••••••••" value={password} onChange={e => {
                   setPassword(e.target.value);
                   if (authError) setAuthError("");
                 }} required />

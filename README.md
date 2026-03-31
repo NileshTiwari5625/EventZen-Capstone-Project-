@@ -48,7 +48,6 @@ All required submission documents are available in `/docs`:
 - `docs/07-User-Flow.md`
 - `docs/08-Deployment-and-Docker.md`
 - `docs/09-Submission-Checklist.md`
-- `docs/10-Deep-Technical-Report.md`
 
 ## Ownership Note
 If you are submitting individually, update the **Author** details in documentation files before submission.

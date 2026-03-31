@@ -14,7 +14,11 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   }
 
   if (requiredRole && user.role !== requiredRole) {
-    return <Navigate to={user.role === "admin" ? "/admin/dashboard" : "/venues"} replace />;
+    if (user.role === "admin") {
+      return <Navigate to="/admin/dashboard" replace />;
+    }
+
+    return <Navigate to={user.profileCompleted ? "/venues" : "/profile"} replace />;
   }
 
   return <>{children}</>;
