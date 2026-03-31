@@ -12,13 +12,13 @@ import AdminEvents from "./pages/admin/AdminEvents";
 import AdminVenues from "./pages/admin/AdminVenues";
 import AdminAttendees from "./pages/admin/AdminAttendees";
 import AdminVendors from "./pages/admin/AdminVendors";
+import AdminBudget from "./pages/admin/AdminBudget";
 import CustomerLayout from "./components/CustomerLayout";
 import BrowseVenues from "./pages/customer/BrowseVenues";
 import MyBookings from "./pages/customer/MyBookings";
 import Profile from "./pages/customer/Profile";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
-import BudgetTracker from "./components/BudgetTracker";
 import ProfileCompletionRoute from "./components/ProfileCompletionRoute";
 const queryClient = new QueryClient();
 
@@ -44,7 +44,7 @@ const App = () => (
             <Route path="venues" element={<AdminVenues />} />
             <Route path="attendees" element={<AdminAttendees />} />
             <Route path="vendors" element={<AdminVendors />} />
-            <Route path="budget" element={<BudgetTracker />} />
+            <Route path="budget" element={<AdminBudget />} />
           </Route>
 
           {/* Customer Portal */}

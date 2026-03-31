@@ -7,12 +7,12 @@ export const mockEvents = [
 ];
 
 export const mockVenues = [
-  { id: "1", name: "Grand Convention Center", location: "Downtown, NYC", capacity: 2000, pricePerDay: 5000, rating: 4.8, image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=250&fit=crop", amenities: ["WiFi", "AV System", "Parking", "Catering"] },
-  { id: "2", name: "Riverside Park Amphitheater", location: "Brooklyn, NYC", capacity: 5000, pricePerDay: 8000, rating: 4.6, image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=250&fit=crop", amenities: ["Open Air", "Stage", "Parking"] },
-  { id: "3", name: "The Ritz Ballroom", location: "Midtown, NYC", capacity: 500, pricePerDay: 12000, rating: 4.9, image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=400&h=250&fit=crop", amenities: ["Luxury", "Catering", "Valet", "AV System"] },
-  { id: "4", name: "Innovation Hub", location: "SoHo, NYC", capacity: 150, pricePerDay: 2000, rating: 4.5, image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=250&fit=crop", amenities: ["WiFi", "Projector", "Coffee Bar"] },
-  { id: "5", name: "Crystal Palace", location: "Upper East Side, NYC", capacity: 800, pricePerDay: 15000, rating: 4.7, image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&h=250&fit=crop", amenities: ["Luxury", "Garden", "Catering", "Parking"] },
-  { id: "6", name: "Skyline Rooftop", location: "Manhattan, NYC", capacity: 300, pricePerDay: 7000, rating: 4.4, image: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=250&fit=crop", amenities: ["Rooftop", "Bar", "City View", "DJ Setup"] },
+  { id: "1", name: "Jio World Convention Centre", location: "BKC, Mumbai", capacity: 3000, pricePerDay: 450000, rating: 4.9, image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=250&fit=crop", amenities: ["WiFi", "AV System", "Parking", "Catering"] },
+  { id: "2", name: "Palace Grounds", location: "Bengaluru", capacity: 5000, pricePerDay: 350000, rating: 4.7, image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=250&fit=crop", amenities: ["Open Air", "Stage", "Parking"] },
+  { id: "3", name: "The Leela Ambience Convention", location: "New Delhi", capacity: 2000, pricePerDay: 400000, rating: 4.8, image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=400&h=250&fit=crop", amenities: ["Luxury", "Catering", "Valet", "AV System"] },
+  { id: "4", name: "HITEX Exhibition Center", location: "Hyderabad", capacity: 3500, pricePerDay: 320000, rating: 4.6, image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=250&fit=crop", amenities: ["WiFi", "Projector", "Exhibition Hall"] },
+  { id: "5", name: "Chennai Trade Centre", location: "Nandambakkam, Chennai", capacity: 2800, pricePerDay: 300000, rating: 4.5, image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&h=250&fit=crop", amenities: ["Convention Halls", "Parking", "Catering"] },
+  { id: "6", name: "Biswa Bangla Convention Centre", location: "Kolkata", capacity: 2500, pricePerDay: 280000, rating: 4.6, image: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=250&fit=crop", amenities: ["Rooftop", "City View", "Premium Lounge"] },
 ];
 
 export const mockAttendees = [
@@ -34,5 +34,5 @@ export const mockVendors = [
 export const mockBookings = [
   { id: "1", venue: "Grand Convention Center", event: "Team Building Day", date: "2026-05-20", status: "confirmed" as const, total: 5000 },
   { id: "2", venue: "Skyline Rooftop", event: "Birthday Party", date: "2026-06-15", status: "pending" as const, total: 7000 },
-  { id: "3", venue: "Innovation Hub", event: "Workshop", date: "2026-04-01", status: "completed" as const, total: 2000 },
+  { id: "3", venue: "Innovation Hub", event: "Workshop", date: "2026-02-01", status: "completed" as const, total: 2000 },
 ];

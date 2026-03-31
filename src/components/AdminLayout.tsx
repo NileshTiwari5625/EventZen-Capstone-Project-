@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Calendar, MapPin, Users, Package, Sparkles, LogOut, LayoutDashboard } from "lucide-react";
+import { Calendar, MapPin, Users, Package, Sparkles, LogOut, LayoutDashboard, DollarSign } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { authService } from "@/services/api";
 
@@ -9,6 +9,7 @@ const navItems = [
   { to: "/admin/venues", icon: MapPin, label: "Venues" },
   { to: "/admin/attendees", icon: Users, label: "Attendees" },
   { to: "/admin/vendors", icon: Package, label: "Vendors" },
+  { to: "/admin/budget", icon: DollarSign, label: "Budget" },
 ];
 
 const AdminLayout = () => {
