@@ -12,7 +12,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 
-const INDIAN_CITIES = ["Mumbai", "Bengaluru", "New Delhi", "Hyderabad", "Chennai", "Kolkata", "Pune"];
 const FALLBACK_VENUE_IMAGE = "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=500&fit=crop";
 
 const INDIAN_CITIES = ["Mumbai", "Bengaluru", "New Delhi", "Hyderabad", "Chennai", "Kolkata", "Pune"];
